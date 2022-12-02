@@ -12,45 +12,37 @@ func main(){
 	myPoints := 0
 	for _,line := range data{
 		x:= strings.Split(line," ")
-		fmt.Println(x[0],x[1])
-
-		switch x[1] {
-		case "X":
-			myPoints+=1;
-		case "Y":
-			myPoints+=2;
-		case "Z":
-			myPoints+=3;
-		}
 
 		if x[0]=="A"{
 			switch x[1] {
 			case "X":
-				myPoints+=3;
+				myPoints+=(3+0);
 			case "Y":
-				myPoints+=6;
+				myPoints+=(1+3);
 			case "Z":
-				myPoints+=0;
+				myPoints+=(2+6);
 			}
 		}
+
 		if x[0]=="B"{
 			switch x[1] {
 			case "X":
-				myPoints+=0;
+				myPoints+=(1+0);
 			case "Y":
-				myPoints+=3;
+				myPoints+=(2+3);
 			case "Z":
-				myPoints+=6;
+				myPoints+=(3+6);
 			}
 		}
+
 		if x[0]=="C"{
 			switch x[1] {
 			case "X":
-				myPoints+=6;
+				myPoints+=(2+0);
 			case "Y":
-				myPoints+=0;
+				myPoints+=(3+3);
 			case "Z":
-				myPoints+=3;
+				myPoints+=(1+6);
 			}
 		}
 	}
