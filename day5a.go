@@ -12,10 +12,12 @@ func main(){
 	data := helper.ReadFileString("day5.data")
 
 	stacks, endOfInput ,stacksCnt := initStacks(data)
-	// fmt.Println(stacks,endOfInput)
-
+	fmt.Println("==================")
+	fmt.Println(stacks)
+	fmt.Println("======start=======")
+	
 	// part 2 - moving crates
-	for _,row := range data[endOfInput:]{
+	for _,row := range data[endOfInput:]{ //endOfInput+5
 		line := strings.Split(row," ")
 		howmuch, _ := strconv.Atoi(line[1])
 		from, _ := strconv.Atoi(line[3])
@@ -23,26 +25,26 @@ func main(){
 
 		from-=1
 		to-=1
-
-		// fmt.Println("move",howmuch,"from",from,"to",to)
+		
+		fmt.Println("from:",from,"to:",to,"pile of:",howmuch)
 
 		crates,rest := pull(howmuch,stacks[from])
-
 		stacks[from] = rest
 
 		// rotate crates
 		crates = rotate(crates)
 		// add to another stack
-		stackTo := append(crates,stacks[to]...)
+		stackTo := append(crates, stacks[to]...)
 		stacks[to] = stackTo
+		
+		fmt.Println(stacks)
 
-		// fmt.Println(stacks)
 	}
 	res := ""
 	for i:=0;i<=stacksCnt;i++{
-		fmt.Println(stacks[i])
-		res+=stacks[i][0]
+		res+=stacks[i][len(stacks[i])-1]
 	}
+	fmt.Println(stacks)
 	fmt.Println(res)
 }
 func initStacks(data []string)(map[int][]string,int,int){
@@ -61,7 +63,6 @@ func initStacks(data []string)(map[int][]string,int,int){
 				stackNum := x/4
 				if stackNum > stacksCnt{stacksCnt = stackNum}
 				stacks[stackNum] = append(stacks[stackNum],crate)
-				// fmt.Println(crate,stackNum)
 			}else{
 				if crate == "eol"{
 					break 
@@ -78,7 +79,6 @@ func initStacks(data []string)(map[int][]string,int,int){
 			if e == nil{
 				stackNum := len(row)/4
 				if stackNum > stacksCnt{stacksCnt = stackNum}
-				// fmt.Println(crate,stackNum)
 				stacks[stackNum] = append(stacks[stackNum],crate)
 			}
 		}else{
@@ -116,7 +116,7 @@ func pull(howmuch int,from []string)(taken, rest []string){
 
 func rotate(crates []string)[]string{
 	for i:=0;i<len(crates)/2;i++{
-		crates[i],crates[len(crates)-1] = crates[len(crates)-1],crates[i]
+		crates[i],crates[len(crates)-i-1] = crates[len(crates)-i-1],crates[i]
 	}
 	return crates
 }
