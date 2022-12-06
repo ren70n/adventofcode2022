@@ -12,11 +12,7 @@ func main(){
 	data := helper.ReadFileString("day5.data")
 
 	stacks, endOfInput ,stacksCnt := initStacks(data)
-	fmt.Println("==================")
-	fmt.Println(stacks)
-	fmt.Println("======start=======")
 	
-	// part 2 - moving crates
 	for _,row := range data[endOfInput:]{ //endOfInput+5
 		line := strings.Split(row," ")
 		howmuch, _ := strconv.Atoi(line[1])
@@ -25,8 +21,6 @@ func main(){
 
 		from-=1
 		to-=1
-		
-		fmt.Println("from:",from,"to:",to,"pile of:",howmuch)
 
 		crates,rest := pull(howmuch,stacks[from])
 		stacks[from] = rest
@@ -36,15 +30,11 @@ func main(){
 		// add to another stack
 		stackTo := append(crates, stacks[to]...)
 		stacks[to] = stackTo
-		
-		fmt.Println(stacks)
-
 	}
 	res := ""
 	for i:=0;i<=stacksCnt;i++{
-		res+=stacks[i][len(stacks[i])-1]
+		res+=stacks[i][0]
 	}
-	fmt.Println(stacks)
 	fmt.Println(res)
 }
 func initStacks(data []string)(map[int][]string,int,int){
