@@ -39,25 +39,27 @@ func main(){
 		boolField = boolColMerge(boolField,boolCol,x)
 	}
 	
-	res := make([][]int,len(field))
+// 	res := make([][]int,len(field))
+	
+	max := 0
 	
 	for y,row := range boolField{
-		res[y] = make([]int,len(field[0]))
+// 		res[y] = make([]int,len(field[0]))
 		
 		for x,_ := range row{
 			if boolField[y][x] > 0{
-				countDist(boolField,x,y)
+				cnt := countDist(boolField,x,y)
+				if cnt>max{
+					max = cnt
+				}
 			}
 		}
 	}
-	
-	for _,r:=range(boolField){
-		fmt.Println(r)
-	}
+	fmt.Println(max)
 }
 
 func countDist(field [][]int, x,y int)int{
-	res := 1
+// 	res := 1
 	baseVal := field[y][x]
 	// left
 	cntl := 0
@@ -75,11 +77,23 @@ func countDist(field [][]int, x,y int)int{
 			break
 		}
 	}
-	fmt.Println(baseVal,cntr,cntl)
-	// up
 	// down
+	cntd := 0
+	for i:=y+1;i<len(field);i++{
+		cntd++
+		if field[i][x]>=baseVal{
+			break
+		}
+	}
 	
-	return res
+	cntu := 0
+	for i:=y-1;i>=0;i--{
+		cntu++
+		if field[i][x]>=baseVal{
+			break
+		}
+	}
+	return cntr*cntl*cntd*cntu
 }
 
 func checkRow(row []int)[]int{
