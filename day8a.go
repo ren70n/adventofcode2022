@@ -33,8 +33,6 @@ func main(){
 	}
 	boolField = append(boolField,topBottomRow)
 
-	// columns
-	
 	for x,_ := range field[0]{
 		col := make([]int,len(field))
 		for y:=0;y<len(field);y++{
@@ -43,10 +41,6 @@ func main(){
 		boolCol := checkRow(col)
 		
 		boolField = boolColMerge(boolField,boolCol,x)
-	}
-	
-	for _,r:=range(boolField){
-		fmt.Println(r)
 	}
 		
 	fmt.Println(sumUp(boolField))
