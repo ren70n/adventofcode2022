@@ -20,11 +20,6 @@ type dir struct{
 	dirUp *dir
 }
 
-// func (d dir)dirSize() int{
-
-// 	return 0
-// }
-
 func main(){
 	data := helper.ReadFileString("day7.data")
 	root := dir{name: "/"}
@@ -76,12 +71,26 @@ func main(){
 		}
 	}
 
-	goTrough(&root)
-	fmt.Println(root.size)
+	maxSize := 100000
+	fmt.Println(fillDirSizes(&root,maxSize))
 }
 
-func goTrough(_dir *dir){
+func fillDirSizes(_dir *dir,maxSize int)int{
 	dirs := _dir.dirs
+
+	ret := 0
+
+	for _,d :=range dirs{
+		if d.size==0{
+			ret += fillDirSizes(&d, maxSize)
+		}
+		_dir.size+=d.size
+	}
+
+	for _,f :=range _dir.files{
+		_dir.size += f.size
+	}
+
 	// this is final directory
 	if len(dirs)==0{
 		// sum the files
@@ -90,20 +99,13 @@ func goTrough(_dir *dir){
 			fileSize += _file.size
 		}
 		_dir.size = fileSize
-
-		return
 	}
 
-	for _,d :=range dirs{
-		if d.size==0{
-			goTrough(&d)
-		}
-		_dir.size+=d.size
+	if _dir.size <= maxSize{
+		return _dir.size + ret
 	}
 
-	for _,f :=range _dir.files{
-		_dir.size += f.size
-	}
+	return ret
 }
 
 func printDir(d dir){
