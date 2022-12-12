@@ -99,8 +99,6 @@ func findProperDirSize(sizeTab []int,rootSize int) int{
 func fillDirSizes(_dir *dir,_sizes *[]int){
 	dirs := _dir.dirs
 
-	// ret := 0
-
 	for _,d :=range dirs{
 		if d.size==0{
 			fillDirSizes(&d,_sizes)
@@ -123,16 +121,6 @@ func fillDirSizes(_dir *dir,_sizes *[]int){
 	*_sizes = append(*_sizes,_dir.size)
 }
 
-func printDir(d dir){
-	fmt.Println(">",d.name)
-	for _,_dir := range d.dirs{
-		fmt.Println("dir",_dir.name)
-	}
-	for _,_file := range d.files{
-		fmt.Println(_file.name,_file.size)
-	}
-}
-
 func newDir(name string, dirUp *dir)dir{
 	newDir := dir{
 		name: name,
@@ -147,12 +135,4 @@ func checkIfDirExists(currentDir *dir, dirName string)int{
 		}
 	}
 	return -1
-}
-
-func getDirOfSize(size int, root *dir){
-	fmt.Println(root.name,root.size)
-
-	for _,_dir := range root.dirs{
-		getDirOfSize(size, &_dir)
-	}
 }
