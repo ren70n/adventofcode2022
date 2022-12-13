@@ -27,16 +27,17 @@ func main(){
 		step,_ := strconv.Atoi(strStep)
 
 		for i:=0;i<step;i++{
-			dist := countDistance(head,tail)
-			if dist >=1.5{
-				tail = headPath[len(headPath)-2]
-				worldMap[fmt.Sprintf("%d:%d",tail[0],tail[1])]++
-
-			}
 			newHead := moveHead(dir,head)
 
 			headPath = append(headPath,newHead)
 			head = headPath[len(headPath)-1]
+
+			dist := countDistance(head,tail)
+			if dist >=2{
+				tail = headPath[len(headPath)-2]
+				worldMap[fmt.Sprintf("%d:%d",tail[0],tail[1])]++
+
+			}
 
 		}
 	}
@@ -66,19 +67,3 @@ func countDistance(A,B []int)float64{
 	return dist
 }
 
-// func printMap(_map map[string]int){
-
-// 	fmt.Println(_map)
-
-// 	for y:=0;y<6;y++{
-// 		for x:=0;x<6;x++{
-// 			// fmt.Println(_map[fmt.Sprintf("%d:%d",x,y)])
-// 			if _map[fmt.Sprintf("%d:%d",x,y)]>0{
-// 				fmt.Print("#")
-// 			}else{
-// 				fmt.Print("_")
-// 			}
-// 		}
-// 		fmt.Println()
-// 	}
-// }
