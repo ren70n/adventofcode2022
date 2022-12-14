@@ -66,4 +66,3 @@ func countDistance(A,B []int)float64{
 
 	return dist
 }
-
